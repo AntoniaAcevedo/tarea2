@@ -11,5 +11,7 @@ typedef struct Carrito Carrito;
 
 void Buscar_tipo (char * Tipo, HashMap * Global);
 
+Producto * create_product(char * Nom, char * Marc, char * Tipo, size_t stock, size_t precio);
+
 
 #endif // FUNCIONES_H_INCLUDED
