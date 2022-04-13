@@ -1,10 +1,11 @@
-#define MAX 50
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "funciones.h"
 #include "hashmap.h"
 #include "list.h"
+#include "pila.h"
+#define MAX 50
 
 typedef struct Almacen{
     HashMap * Productos;
@@ -24,7 +25,7 @@ typedef struct Producto{
 typedef struct Carrito{
     char Nom_car [MAX];
     size_t tot_car;
-    Pila * Productos; //aun no esta definida.
+    Stack * Productos; //aun no esta definida.
 }Carrito;
 
 //mostrarProductosTipo
