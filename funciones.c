@@ -115,7 +115,6 @@ Producto * create_product(char * Nom, char * Marc, char * Tipo, size_t costo, si
     return new_prod;
 }
 
-
 void importar_archivo(){
     // IDEA, pasar de argumento funcion que transforme la informacion al formato reuqerido.
     // Importar deberia funcionar para cualquier tarea xd
@@ -128,4 +127,11 @@ void importar_archivo(){
     // Se podra hacer que la misma funcion guarde la infromacion?
     // quiza pasarle dos funciones??
     //ekis. matenme 
+}
+
+void Agregar_a_carr(Carrito  * car, Producto * prod){
+    //Comporbar existencia del carrito, comprobar repeticion en lista
+    // para no volver a agregar un mismo item al carrito. 
+
+    // Si no se encunentra se agrega, si se encuentra se suma al stock.
 }
