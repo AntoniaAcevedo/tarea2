@@ -1,15 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "funciones.h"
-#define MAX 10
+#define MAX 100
 
 int main (void)
 {
+    Almacen * info_almacen = create_Almacen();
+
     while (1){
 
        // ¬.¬
         long selec;
         long selec2;
+        char arch[MAX] = "";
+
         system("cls");
         printf("MENU RAWR XDDDDDDDDDDDDDDD\n\n");
 
@@ -32,28 +36,48 @@ int main (void)
         {
             case 1:
                 puts("Ingrese el nombre del archivo que desea importar");
+                scanf("%s", arch);
                 getchar();
-            break;
+
+                printf("Nombre de su archivo: %s\n\n", arch);
+
+                importar_archivo(arch, info_almacen);
+                getchar();
+                break;
             case 2:
-                puts("lol");
+                puts("Ingrese el nombre del archivo que desea exportar");
+                scanf("%s", arch);
+                getchar();
+
+                printf("Nombre de su archivo: %s\n\n", arch);
+
+                exportar_archivo(info_almacen, arch);
                 getchar();
             break;
             case 3:
                 puts("lol");
                 getchar();
-            break;
+                break;
             case 4:
                 puts("lol");
                 getchar();
-            break;
+                break;
             case 5:
-                puts("lol");
+                puts("Ingrese el producto que desea buscar");
+                scanf("%100[^\n]", arch);
                 getchar();
-            break;
+
+                puts("Producto a buscar es:");
+                printf("%s\n\n", arch);
+
+                Buscar_tipo(arch, info_almacen);
+                getchar();
+
+                break;
             case 6:
                 puts("lol");
                 getchar();
-            break;
+                break;
             case 7:
                 puts("Saliendo del programa...");
                 getchar();

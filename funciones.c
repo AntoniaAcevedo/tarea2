@@ -1,11 +1,14 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
+#include <stdlib.h>
+#include <ctype.h>
 #include "funciones.h"
 #include "hashmap.h"
 #include "list.h"
 #include "pila.h"
-#define MAX 50
+#define MAX 300
+#define CAP_PROD 300
+#define CAP_MT 100
 
 typedef struct Almacen{
     HashMap * Productos;
@@ -29,79 +32,133 @@ typedef struct Carrito{
 }Carrito;
 
 //mostrarProductosTipo
-void Buscar_tipo (char * Tipo, HashMap * Tipos){
-    Pair * aux = searchMap(Tipos, Tipo);
+void Buscar_tipo (char * t, Almacen * Global){
+
+    Pair * aux;
     List * aux2;
     Producto * aux3;
 
+
+    aux = searchMap(Global->Tipos, t);
+
     if (aux == NULL){
-        printf("NO hay jaja (llego tarde señor)");
+        printf("NO hay jaja");
         return;
     }
 
-    aux2 = (List *) aux -> value;
+    aux2 = (List *) return_value(aux);
     aux3= (Producto *)firstList (aux2);
 
     if (aux3 == NULL){
         printf("NO queda");
         return; 
     }
-    while ( aux3 != NULL){
-        printf("SI hay jaja ");//imprime info producto
+
+    printf("----Productos del tipo %s----\n", t);
+    printf("-----------------------------------------------------------------\n");
+
+    while (aux3 != NULL){
+        printf("-->%-61s|\n",  aux3->Nom_prod);//imprime info producto
+        printf("Marca: %-26s Stock:%4ld | Precio:%9ld |\n",aux3->Marca, aux3->precio, aux3->stock);
+        printf("                                                                |\n");
         aux3 = (Producto *) nextList(aux2);
     }
-    return; //si no fuciona me pego un tiro porque no sabria hacer el resto.
+    printf("-----------------------------------------------------------------\n");
+    return; 
 }
 
 void agregar_producto(Almacen * Global, char * Nom, char * Marc, 
                       char * Type, size_t Price, size_t Stock){
-    Pair * aux;
+    Pair * aux, * aux2, * aux3;
     Producto * aux_prod;
-    List * aux_list;
-
-    aux = searchMap(Global->Productos, Nom);
+    List * aux_list_mar;
+    List * aux_list_tip;
+    
+    aux = (Pair  *) searchMap(Global->Productos, Nom);
     if (aux == NULL)
     {
         aux_prod = create_product(Nom, Marc, Type, Price, Stock); 
-        insertMap(Global->Productos, Nom, aux_prod);
+        insertMap(Global->Productos, aux_prod->Nom_prod , aux_prod);
     }
     else
     {
-        aux_prod = (Producto *) aux->value;
+        aux_prod = (Producto *) return_value(aux);
         aux_prod->stock += Stock;
     }
 
-    //
-    aux = searchMap(Global->Marcas, Marc);
-    if (aux == NULL)
+    aux2 = (Pair *) searchMap(Global->Marcas, Marc);
+    if (aux2 == NULL)
     {   
-        aux_list = createList();
-        pushBack(aux_list, aux_prod);
-        insertMap(Global->Marcas, Marc, aux_list);
+        aux_list_mar = createList();
+        pushBack(aux_list_mar, aux_prod);
+        insertMap(Global->Marcas, aux_prod->Marca, aux_list_mar);
     }
     else
     {
-        aux_list = (List *) aux->value;
-        pushBack(aux_list, aux_prod);
+        aux_list_mar = (List *) return_value(aux2);
+        pushBack(aux_list_mar, aux_prod);
     }
 
-    //
-    aux = searchMap(Global->Tipos, Type);
-    if (aux == NULL)
+    aux3 = (Pair *) searchMap(Global->Tipos, Type);
+    if (aux3 == NULL)
     {
-        aux_list = createList();
-        pushBack(aux_list, aux_prod);
-        insertMap(Global->Tipos, Type, aux_prod);
+        aux_list_tip = createList();
+        pushBack(aux_list_tip, aux_prod);
+        insertMap(Global->Tipos, aux_prod->Tipo, aux_list_tip);
     }
     else
     {
-        aux_list = (List *) aux->value;
-        pushBack(aux_list, aux_prod);
+        aux_list_tip = (List *) return_value(aux3);
+        pushBack(aux_list_tip, aux_prod);
     }
-
-    // Finalizado.
-    return;
 }
+
+const char *get_csv_field (char * tmp, int k) {
+    int open_mark = 0;
+    char* ret=(char*) malloc (150*sizeof(char));
+    int ini_i=0, i=0;
+    int j=0;
+    while(tmp[i+1]!='\0'){
+
+        if(tmp[i]== '\"'){
+            open_mark = 1-open_mark;
+            if(open_mark) ini_i = i+1;
+            i++;
+            continue;
+        }
+
+        if(open_mark || tmp[i]!= ','){
+            if(k==j) ret[i-ini_i] = tmp[i];
+            i++;
+            continue;
+        }
+
+        if(tmp[i]== ','){
+            if(k==j) {
+               ret[i-ini_i] = 0;
+               return ret;
+            }
+            j++; ini_i = i+1;
+        }
+
+        i++;
+    }
+
+    if(k==j) {
+
+        i = i-1;
+       while(tmp[i]!=  '\0')
+        {
+            ret[i-ini_i] =  tmp[i];
+            i++;
+        }
+       ret[i-ini_i] = 0;
+       return ret;
+    }
+
+    return NULL;
+}
+
 
 Producto * create_product(char * Nom, char * Marc, char * Tipo, size_t costo, size_t stock){
     Producto * new_prod = (Producto *) malloc (sizeof(Producto));
@@ -113,26 +170,118 @@ Producto * create_product(char * Nom, char * Marc, char * Tipo, size_t costo, si
     new_prod->precio = costo;
     new_prod->stock = stock;
 
+    //puts("Centinela : producto fue creado!");
+
     return new_prod;
 }
 
-void importar_archivo(){
-    // IDEA, pasar de argumento funcion que transforme la informacion al formato reuqerido.
-    // Importar deberia funcionar para cualquier tarea xd
+void importar_archivo(char * Nom_Arch, Almacen * gl){
+    FILE * entrada;
+    char str[MAX];
+    char a_nom[MAX], a_Mar[MAX], 
+         a_tip[MAX], a_price[MAX], a_stock[MAX];
 
-    // Importar solo se encarga de la lectura de las cadenas, 
-    // la llamada a la funcion que guarda la informacion
 
+    entrada = fopen(Nom_Arch, "rt");
+    if(entrada == NULL)
+    {
+        perror("No se pudo abrir el archivo de lectura");
+        exit(1);
+    }
 
-    // Donde se guardara la informacion?
-    // Se podra hacer que la misma funcion guarde la infromacion?
-    // quiza pasarle dos funciones??
-    //ekis. matenme 
+    while(fscanf(entrada,"%[^\n]", str) != EOF)
+    {
+        for (int i = 0; i<5 ; i++){
+            const char * aux = get_csv_field(str, i);
+
+            switch (i)
+            {
+            case 0:
+                strcpy(a_nom, aux);
+                break;
+            case 1:
+                strcpy(a_Mar, aux);
+                break;
+            case 2:
+                strcpy(a_tip, aux);
+                break;
+            case 3:
+                strcpy(a_stock, aux);
+                break;
+            case 4:
+                strcpy(a_price, aux);
+                break;
+            default:
+                printf("Se produjo un error\n");
+                exit(1);
+                break;
+            }
+        }
+
+        agregar_producto(gl, a_nom, a_Mar, a_tip, (size_t) atol(a_price), (size_t) atol(a_stock));
+        getc(entrada);
+    }
+
+    fclose(entrada);
+    return;
+}
+
+Almacen * create_Almacen(void){
+    Almacen * new_alm = (Almacen *) malloc(sizeof(Almacen));
+    // Comprobar reserva
+
+    new_alm->Carritos = createList();
+    new_alm->Marcas = createMap(CAP_MT);
+    new_alm->Productos = createMap(CAP_PROD);
+    new_alm->Tipos = createMap(CAP_MT);
+
+    new_alm->tot_car = 0;
+    new_alm->tot_marc = 0;
+    new_alm->tot_prod = 0;
+    new_alm->tot_tipos = 0;
+
+    return new_alm;
 }
 
 void Agregar_a_carr(Carrito  * car, Producto * prod){
     //Comporbar existencia del carrito, comprobar repeticion en lista
     // para no volver a agregar un mismo item al carrito. 
-
+ 
     // Si no se encunentra se agrega, si se encuentra se suma al stock.
+
+    return;
+}
+
+// Se recorre hashmapde marcas por ser de menor tamanyo que  el de productos.
+void exportar_archivo(Almacen * Global, char * arch){
+    FILE * salida;
+    Pair  * rec_marc;
+    List * lista;
+    Producto * rec_list;
+
+    salida = fopen(arch, "wt");
+    if(salida == NULL)
+    {
+        perror("No se pudo abrir el archivo de salida");
+        exit(1);
+    }
+
+    rec_marc = firstMap(Global->Marcas);
+    while(rec_marc != NULL)
+    {
+        lista  = return_value(rec_marc);
+        rec_list = (Producto *) firstList(lista);
+
+        while (rec_list != NULL)
+        {
+            fprintf(salida, "%s,%s,%s,%ld,%ld\n", rec_list->Nom_prod, rec_list->Marca, 
+                        rec_list->Tipo, rec_list->stock, rec_list->precio);
+            rec_list = (Producto *) nextList(lista);
+        } 
+        rec_marc = nextMap(Global->Marcas);      
+    }
+
+    fclose(salida);
+
+    return;
 }

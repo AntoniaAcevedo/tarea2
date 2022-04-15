@@ -17,7 +17,7 @@ typedef struct Pair {
      void * value;
 } Pair;
 
-size_t hash( char * key, long capacity);
+long hash( char * key, long capacity);
 
 HashMap * createMap(long capacity);
 
@@ -34,5 +34,8 @@ Pair * nextMap(HashMap * table);
 void enlarge(HashMap * map);
 
 long capacidad (HashMap * Map);// si
+
+void * return_value(Pair * par);
+
 
 #endif /* HashMap_h */
