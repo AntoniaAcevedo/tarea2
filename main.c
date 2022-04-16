@@ -35,6 +35,7 @@ int main (void)
         switch (selec)
         {
             case 1:
+                system("cls");
                 puts("Ingrese el nombre del archivo que desea importar");
                 scanf("%s", arch);
                 getchar();
@@ -45,6 +46,7 @@ int main (void)
                 getchar();
                 break;
             case 2:
+                system("cls");
                 puts("Ingrese el nombre del archivo que desea exportar");
                 scanf("%s", arch);
                 getchar();

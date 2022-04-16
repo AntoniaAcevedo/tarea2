@@ -42,7 +42,7 @@ void Buscar_tipo (char * t, Almacen * Global){
     aux = searchMap(Global->Tipos, t);
 
     if (aux == NULL){
-        printf("NO hay jaja");
+        printf("No existe este tipo de producto");
         return;
     }
 
@@ -59,7 +59,7 @@ void Buscar_tipo (char * t, Almacen * Global){
 
     while (aux3 != NULL){
         printf("-->%-61s|\n",  aux3->Nom_prod);//imprime info producto
-        printf("Marca: %-26s Stock:%4ld | Precio:%9ld |\n",aux3->Marca, aux3->precio, aux3->stock);
+        printf("Marca: %-26s Stock:%4ld | Precio:%9ld |\n",aux3->Marca, aux3->stock, aux3->precio);
         printf("                                                                |\n");
         aux3 = (Producto *) nextList(aux2);
     }
@@ -169,8 +169,6 @@ Producto * create_product(char * Nom, char * Marc, char * Tipo, size_t costo, si
     strcpy(new_prod->Tipo, Tipo);
     new_prod->precio = costo;
     new_prod->stock = stock;
-
-    //puts("Centinela : producto fue creado!");
 
     return new_prod;
 }
