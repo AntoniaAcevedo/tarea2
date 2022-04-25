@@ -92,7 +92,6 @@ int main (void)
                     Mostrar_pro (info_almacen);
                     break;
                 }
-
             case 5:
                 puts("Ingrese el producto que desea buscar");
                 scanf("%100[^\n]", arch);
