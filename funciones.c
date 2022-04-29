@@ -31,24 +31,31 @@ typedef struct Carrito{
     Stack * Productos; //aun no esta definida.
 }Carrito;
 
-<<<<<<< HEAD
+void Buscar_Nom (char * n, Almacen * Global){
+    Pair * aux= searchMap(Global ->Productos,n);
+    Producto * aux2= (Producto*) return_value(aux);
+    if (aux == NULL){
+    printf("No existe este tipo de producto");
+    return;
+    }
+    else{
+        printf("----Productos del tipo %s----\n", n);
+        printf("-----------------------------------------------------------------\n");
+        printf("-->%-61s Marca: %s|\n", aux2 -> Nom_prod, aux2 -> Marca);//imprime info producto
+        printf("Tipo: %-26s Stock:%4ld | Precio:%9ld |\n",aux2 -> Tipo, aux2 -> stock, aux2 -> precio);
+        printf("                                                                |\n");
+        printf("-----------------------------------------------------------------\n");
+    }
+}
 //mostrarProductosMarca
 void Buscar_marca (char * m, Almacen * Global){
-=======
-//mostrarProductosTipo
-void Buscar_tipo (char * t, Almacen * Global){
->>>>>>> 4c9ada6ad47d4a93a0092f5eb8ae646ade1df3c8
 
     Pair * aux;
     List * aux2;
     Producto * aux3;
 
 
-<<<<<<< HEAD
     aux = searchMap(Global->Marcas, m);
-=======
-    aux = searchMap(Global->Tipos, t);
->>>>>>> 4c9ada6ad47d4a93a0092f5eb8ae646ade1df3c8
 
     if (aux == NULL){
         printf("No existe este tipo de producto");
@@ -63,27 +70,18 @@ void Buscar_tipo (char * t, Almacen * Global){
         return; 
     }
 
-<<<<<<< HEAD
     printf("----Productos del tipo %s----\n", m);
-=======
-    printf("----Productos del tipo %s----\n", t);
->>>>>>> 4c9ada6ad47d4a93a0092f5eb8ae646ade1df3c8
     printf("-----------------------------------------------------------------\n");
 
     while (aux3 != NULL){
         printf("-->%-61s|\n",  aux3->Nom_prod);//imprime info producto
-<<<<<<< HEAD
         printf("Tipo: %-26s Stock:%4ld | Precio:%9ld |\n",aux3->Tipo, aux3->stock, aux3->precio);
-=======
-        printf("Marca: %-26s Stock:%4ld | Precio:%9ld |\n",aux3->Marca, aux3->stock, aux3->precio);
->>>>>>> 4c9ada6ad47d4a93a0092f5eb8ae646ade1df3c8
         printf("                                                                |\n");
         aux3 = (Producto *) nextList(aux2);
     }
     printf("-----------------------------------------------------------------\n");
     return; 
 }
-<<<<<<< HEAD
 void Mostrar_pro (Almacen * Global){
     HashMap* aux= Global -> Productos;
     int cont= 0;
@@ -142,8 +140,6 @@ void Buscar_tipo (char * t, Almacen * Global){
     printf("-----------------------------------------------------------------\n");
     return; 
 }
-=======
->>>>>>> 4c9ada6ad47d4a93a0092f5eb8ae646ade1df3c8
 
 void agregar_producto(Almacen * Global, char * Nom, char * Marc, 
                       char * Type, size_t Price, size_t Stock){
