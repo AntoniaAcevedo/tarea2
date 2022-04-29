@@ -9,11 +9,13 @@ typedef struct Producto Producto;
 
 typedef struct Carrito Carrito;
 
-void Buscar_tipo (char * Tipo, Almacen * Global); 
+void Buscar_nom (char * n, Almacen * Global);// FUNCIONAL
 
-void Buscar_marca (char * Marca, Almacen * Global);
+void Buscar_tipo (char * Tipo, Almacen * Global); // FUNCIONAL
 
-void Mostrar_pro (Almacen * Global);
+void Buscar_marca (char * Marca, Almacen * Global);// FUNCIONAL
+
+void Mostrar_pro (Almacen * Global); // FUNCIONAL
 
 Producto * create_product(char * Nom, char * Marc, char * Tipo, size_t stock, size_t precio); //FUNCIONAL
 
@@ -29,9 +31,9 @@ void Mostrar_Lista_Carr(Almacen * gl); // MED Funcional
 /*/funciones Carrito //
  // No fun 
 
-Carrito * BuscarCarrito(char * nCarrIn, Almacen * gl);//No
+//Carrito * BuscarCarrito(char * nCarrIn, Almacen * gl);//No
 
-void Elim_del_carr(Carrito * car); // MED Funcional
+//void Elim_del_carr(Carrito * car); // MED Funcional
 
 
 

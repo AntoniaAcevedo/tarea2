@@ -31,6 +31,22 @@ typedef struct Carrito{
     Stack * Productos; //aun no esta definida.
 }Carrito;
 
+void Buscar_nom (char * n, Almacen * Global){
+    Pair * aux= searchMap(Global ->Productos,n);
+    Producto * aux2= (Producto*) return_value(aux);
+    if (aux == NULL){
+    printf("No existe este tipo de producto");
+    return;
+    }
+    else{
+        printf("----Productos del tipo %s----\n", n);
+        printf("-----------------------------------------------------------------\n");
+        printf("-->%-61s Marca: %s|\n", aux2 -> Nom_prod, aux2 -> Marca);//imprime info producto
+        printf("Tipo: %-26s Stock:%4ld | Precio:%9ld |\n",aux2 -> Tipo, aux2 -> stock, aux2 -> precio);
+        printf("                                                                |\n");
+        printf("-----------------------------------------------------------------\n");
+    }
+}
 //mostrarProductosMarca
 void Buscar_marca (char * m, Almacen * Global){
 
@@ -67,11 +83,10 @@ void Buscar_marca (char * m, Almacen * Global){
     printf("-----------------------------------------------------------------\n");
     return; 
 }
-
 void Mostrar_pro (Almacen * Global){
     HashMap* aux= Global -> Productos;
     int cont= 0;
-    if ( Global == NULL){
+    if ( Global -> Productos == NULL){
         printf("NO hay productos");
         return;
     }
@@ -83,11 +98,11 @@ void Mostrar_pro (Almacen * Global){
             cont ++;
             Producto* aux2= (Producto*)return_value(aux3);
             printf("-->%-61s|\n", aux2->Nom_prod);//imprime info producto
-            printf("Tipo: %-26s Stock:%4ld | Precio:%9ld |\n",aux2->Tipo, aux2->stock, aux2->precio);
+            printf("Tipo: %-26s Stock:%4ld | Precio:%9ld  |\n",aux2->Tipo, aux2->stock, aux2->precio);
             printf("                                                                |\n");
             aux3= nextMap(aux);
         }
-        printf("%d",cont);
+        printf("Son en total %d productos",cont);
     }
 
 }
@@ -404,14 +419,6 @@ Almacen * create_Almacen(void){
     return new_alm;
 }
 
-void Agregar_a_carr(Carrito  * car, Producto * prod){
-    //Comporbar existencia del carrito, comprobar repeticion en lista
-    // para no volver a agregar un mismo item al carrito. 
- 
-    // Si no se encunentra se agrega, si se encuentra se suma al stock.
-
-    return;
-}
 
 // Se recorre hashmapde marcas por ser de menor tamanyo que  el de productos.
 void exportar_archivo(Almacen * Global, char * arch){
