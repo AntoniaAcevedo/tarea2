@@ -18,6 +18,8 @@ int main (void)
         
         char arch[MAX] = "";
         char nCarrIn[MAX]="";
+        int cant;
+
 
         system("cls");
         printf("MENU RAWR XDDDDDDDDDDDDDDD\n\n");
@@ -127,8 +129,11 @@ int main (void)
                 case 1:
                     system("cls");
                     printf("Ingrese el producto, la cantidad y el nombre del Carrito:");
-                    //AgregarCarrito(Nom_prod,cant_prod,nCarritoIn);//
-
+                    scanf("%[^\n] %d %[^\n] ",arch,&cant,nCarrIn);
+                    getchar();
+                    Agregar_a_carr( arch,cant,nCarrIn,info_almacen);
+                    Mostrar_Lista_Carr(info_almacen);
+                    getchar();
                     
                     break;
                     /////

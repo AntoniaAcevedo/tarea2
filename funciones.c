@@ -172,18 +172,72 @@ void agregar_producto(Almacen * Global, char * Nom, char * Marc,
         pushBack(aux_list_tip, aux_prod);
     }
 }
-//funciones Carrito //
+Carrito * crearCarrito(char * nCarrito){
+    Carrito * aux=(Carrito *)malloc(sizeof(Carrito));
+    if(aux == NULL){exit(1);}
+    aux->tot_car=0;
+    strcpy(aux->Nom_car,nCarrito);
+    aux->Productos=create_stack();
+    return aux;
+}
+void Agregar_a_carr(char * nprod , int cant,char * car ,Almacen * gl){// No fun
+    Carrito * aux=(Carrito * )firstList(gl->Carritos);
+    Pair * aux2=searchMap(gl->Productos,nprod);
+    if(aux2 == NULL){
+        printf("No Se Encontro tu Producto");
+        return;
+    }
+    Producto * aux3=(Producto *) return_value(aux2);
+    if(aux == NULL){
+        aux=CrearCarrito();
+        Push(aux->Productos,aux3);
+        aux->tot_car++;
+        pushFront(gl->Carritos,aux);
+
+    }
+    else{
+        while (aux != NULL)
+        {
+            if(strcmp(car,aux->Nom_car)==0){
+                Push(aux->Productos,aux3);
+                aux->tot_car++;
+                return;
+            }
+            aux=(Carrito *)nextList(gl->Carritos);
+        }
+        if( aux == NULL){
+            aux=CrearCarrito();
+            Push(aux->Productos,aux3);
+            aux->tot_car++;
+            pushFront(gl->Carritos,aux);
+        }
+    }     
+}
+void Mostrar_Lista_Carr(Almacen * gl){
+    int totCarros=0;
+    Carrito * aux=(Carrito * )firstList(gl->Carritos);
+    if(aux == NULL){
+        printf("No Hay carros existentes.");
+    }
+    else{
+        while (aux != NULL)
+        {
+            totCarros++;
+            printf("\"%s\"\n",aux->Nom_car);
+            printf("Total De Productos = %zd",aux->tot_car);
+            aux=nextList(gl->Carritos);
+        }
+        printf("El total de carros existentes = %d",totCarros);
+    }
+} 
+/*/funciones Carrito //
 Carrito * BuscarCarro(char nCarrIn,Almacen * Global ){
 
 }
-void Agregar_a_carr(char nCarrIn, Producto * prod,Almacen * Global){// No fun
 
-
-
-}
 
 void Elim_del_carr(Carrito * car){
-    if(car->tot_car==NULL){
+    if(car->tot_car==0){
         printf("Tu Carro se encuentra Vacio");
     }
     else{
@@ -193,23 +247,7 @@ void Elim_del_carr(Carrito * car){
         
 }
 
-void Mostrar_Lista_Carr(Almacen * gl){
-    int totCarros=0;
-    Carrito * aux=(Carrito * )firstList(gl->Carritos);
-    if(gl->Carritos == NULL){
-        printf("No Hay carros existentes.");
-    }
-    else{
-        while (aux != NULL)
-        {
-            totCarros++;
-            printf("\"%c\"\n");
-            printf("Total De Productos = %zd",aux->tot_car);
-            aux=nextList(gl->Carritos);
-        }
-        printf("El total de carros existentes = %d",totCarros);
-    }
-} 
+
 
 void Concretar_Compra(char nCarrIn){// No fun
 
@@ -221,7 +259,7 @@ void Elim_Carrito(char nCarrIn , Almacen * Global){
     }
     else {
         int totCarros=0;
-        Carrito * aux=(Carrito * )BuscarCarrito(Global->Carritos);
+        Carrito * aux=(Carrito * )BuscarCarrito(nCarrIn,Global->Carritos);
         while (aux != NULL)
         {
             totCarros++;
@@ -233,11 +271,10 @@ void Elim_Carrito(char nCarrIn , Almacen * Global){
     }
 }
 
-void ActualizarStock(char nCarrIn,Almacen * Global){// No fun
+//void ActualizarStock(char nCarrIn,Almacen * Global){// No fun
 
-}
 
-////
+///*/
 
 const char *get_csv_field (char * tmp, int k) {
     int open_mark = 0;

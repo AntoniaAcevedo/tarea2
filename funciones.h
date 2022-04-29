@@ -20,20 +20,27 @@ Producto * create_product(char * Nom, char * Marc, char * Tipo, size_t stock, si
 const char *get_csv_field (char * tmp, int k); // FUNCIONAL
 
 void importar_archivo(char * Nom_Arch, Almacen * gl); // FUNCIONAL
-//funciones Carrito //
-void Agregar_a_carr(Carrito  * car, Producto * prod, Almacen * gl); // No fun 
+
+Carrito * CrearCarrito(char * nCarrito);
+
+void Agregar_a_carr(char *nprod , int cant,char * car, Almacen * gl);
+
+void Mostrar_Lista_Carr(Almacen * gl); // MED Funcional
+/*/funciones Carrito //
+ // No fun 
 
 Carrito * BuscarCarrito(char * nCarrIn, Almacen * gl);//No
 
 void Elim_del_carr(Carrito * car); // MED Funcional
 
-void Mostrar_Lista_Carr(Almacen * gl); // MED Funcional
+
+
 void Concretar_Compra(); // No fun
-void Elim_Carrito(char * nCarrIn,info_almacen);// No fun
 
+void Elim_Carrito(char nCarrIn , Almacen * gl);// No fun
 
-void ActualizarStock(char * nCarrIn,info_almacen);// No fun
-//////
+void ActualizarStock(char * nCarrIn,Almacen * gl);// No fun
+/////*/
 
 void agregar_producto(Almacen * Global, char * Nom, char * Marc, 
                       char * Type, size_t Price, size_t Stock); // FUNCIONAL
