@@ -86,7 +86,7 @@ void Buscar_marca (char * m, Almacen * Global){
 void Mostrar_pro (Almacen * Global){
     HashMap* aux= Global -> Productos;
     int cont= 0;
-    if ( Global == NULL){
+    if ( Global -> Productos == NULL){
         printf("NO hay productos");
         return;
     }
@@ -98,11 +98,11 @@ void Mostrar_pro (Almacen * Global){
             cont ++;
             Producto* aux2= (Producto*)return_value(aux3);
             printf("-->%-61s|\n", aux2->Nom_prod);//imprime info producto
-            printf("Tipo: %-26s Stock:%4ld | Precio:%9ld |\n",aux2->Tipo, aux2->stock, aux2->precio);
+            printf("Tipo: %-26s Stock:%4ld | Precio:%9ld  |\n",aux2->Tipo, aux2->stock, aux2->precio);
             printf("                                                                |\n");
             aux3= nextMap(aux);
         }
-        printf("%d",cont);
+        printf("Son en total %d productos",cont);
     }
 
 }
@@ -188,7 +188,7 @@ void agregar_producto(Almacen * Global, char * Nom, char * Marc,
     }
 }
 //funciones Carrito //
-Carrito * BuscarCarro(char nCarrIn,Almacen * Global ){
+/*Carrito * BuscarCarro(char nCarrIn,Almacen * Global ){
 
 }
 void Agregar_a_carr(char nCarrIn, Producto * prod,Almacen * Global){// No fun
@@ -236,7 +236,7 @@ void Elim_Carrito(char nCarrIn , Almacen * Global){
     }
     else {
         int totCarros=0;
-        Carrito * aux=(Carrito * )BuscarCarrito(Global->Carritos);
+        Carrito * aux=(Carrito *)BuscarCarrito(Global->Carritos);
         while (aux != NULL)
         {
             totCarros++;
@@ -251,7 +251,7 @@ void Elim_Carrito(char nCarrIn , Almacen * Global){
 void ActualizarStock(char nCarrIn,Almacen * Global){// No fun
 
 }
-
+*/
 ////
 
 const char *get_csv_field (char * tmp, int k) {
@@ -382,14 +382,6 @@ Almacen * create_Almacen(void){
     return new_alm;
 }
 
-void Agregar_a_carr(Carrito  * car, Producto * prod){
-    //Comporbar existencia del carrito, comprobar repeticion en lista
-    // para no volver a agregar un mismo item al carrito. 
- 
-    // Si no se encunentra se agrega, si se encuentra se suma al stock.
-
-    return;
-}
 
 // Se recorre hashmapde marcas por ser de menor tamanyo que  el de productos.
 void exportar_archivo(Almacen * Global, char * arch){

@@ -76,9 +76,9 @@ int main (void)
                     case 1:
                     system("cls");
                     printf("Ingrese nombre: ");
-                    scanf("%s", arch);
+                    scanf("%[^\n]", arch);
                     getchar();
-                    Buscar_nom (arch,info_almacen);
+                    Buscar_nom (arch, info_almacen);
                     getchar();
                     break;
                     ////
@@ -93,6 +93,7 @@ int main (void)
                     ////
                     case 3:
                     system("cls");
+                    printf("Ingrese marca: ");
                     scanf("%s", arch);
                     getchar();
                     Buscar_marca (arch, info_almacen);
@@ -198,7 +199,7 @@ int main (void)
             default:
                 printf("Valor ingresado no valido!\n");
                 getchar();
-                
+
 
         }
     }

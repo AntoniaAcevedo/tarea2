@@ -154,7 +154,6 @@ long capacidad (HashMap * Map){
 void * return_value(Pair * par){
 	if (par == NULL)
 	{
-		puts("Pero sipar no era NULL?????");
 		return NULL;
 	}
 	return par->value;
