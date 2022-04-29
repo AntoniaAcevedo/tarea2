@@ -82,16 +82,18 @@ int main (void)
                     scanf("%s", arch);
                     getchar();
                     Buscar_tipo (arch,info_almacen);
+                    getchar();
                     break;
                     ////
                     case 3:
                     system("cls");
-                    printf("SI: ");
                     scanf("%s", arch);
                     getchar();
-                    Mostrar_pro (info_almacen);
+                    Buscar_marca (arch, info_almacen);
+                    getchar();
                     break;
                 }
+                break;
             case 5:
                 puts("Ingrese el producto que desea buscar");
                 scanf("%100[^\n]", arch);
