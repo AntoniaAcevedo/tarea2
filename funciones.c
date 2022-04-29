@@ -31,7 +31,7 @@ typedef struct Carrito{
     Stack * Productos; //aun no esta definida.
 }Carrito;
 
-void Buscar_Nom (char * n, Almacen * Global){
+void Buscar_nom (char * n, Almacen * Global){
     Pair * aux= searchMap(Global ->Productos,n);
     Producto * aux2= (Producto*) return_value(aux);
     if (aux == NULL){
@@ -50,34 +50,35 @@ void Buscar_Nom (char * n, Almacen * Global){
 //mostrarProductosMarca
 void Buscar_marca (char * m, Almacen * Global){
 
-    Pair * aux;
-    List * aux2;
-    Producto * aux3;
+    Pair * aux_pair;
+    List * rec_list;
+    Producto * prod;
 
 
-    aux = searchMap(Global->Marcas, m);
+    aux_pair = searchMap(Global->Marcas, m);
 
-    if (aux == NULL){
+    if (aux_pair == NULL){
         printf("No existe este tipo de producto");
         return;
     }
 
-    aux2 = (List *) return_value(aux);
-    aux3= (Producto *)firstList (aux2);
+    rec_list = (List *) return_value(aux_pair);
+    prod= (Producto *)firstList (rec_list);
 
-    if (aux3 == NULL){
+    if (prod == NULL){
         printf("NO queda");
         return; 
     }
 
-    printf("----Productos del tipo %s----\n", m);
+    printf("----Productos de la marca %s----\n", m);
+
     printf("-----------------------------------------------------------------\n");
 
-    while (aux3 != NULL){
-        printf("-->%-61s|\n",  aux3->Nom_prod);//imprime info producto
-        printf("Tipo: %-26s Stock:%4ld | Precio:%9ld |\n",aux3->Tipo, aux3->stock, aux3->precio);
+    while (prod != NULL){
+        printf("-->%-61s|\n",  prod->Nom_prod);//imprime info producto
+        printf("Tipo: %-26s Stock:%4ld | Precio:%9ld |\n",prod->Tipo, prod->stock, prod->precio);
         printf("                                                                |\n");
-        aux3 = (Producto *) nextList(aux2);
+        prod = (Producto *) nextList(rec_list);
     }
     printf("-----------------------------------------------------------------\n");
     return; 

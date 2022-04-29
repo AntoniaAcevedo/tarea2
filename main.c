@@ -73,7 +73,8 @@ int main (void)
                     printf("Ingrese nombre: ");
                     scanf("%s", arch);
                     getchar();
-                    //Buscar_nom (arch,info_almacen);
+                    Buscar_nom (arch,info_almacen);
+                    getchar();
                     break;
                     ////
                     case 2:
@@ -82,27 +83,23 @@ int main (void)
                     scanf("%s", arch);
                     getchar();
                     Buscar_tipo (arch,info_almacen);
+                    getchar();
                     break;
                     ////
                     case 3:
                     system("cls");
-                    printf("SI: ");
                     scanf("%s", arch);
                     getchar();
-                    Mostrar_pro (info_almacen);
+                    Buscar_marca (arch, info_almacen);
+                    getchar();
                     break;
                 }
+                break;
             case 5:
-                puts("Ingrese el producto que desea buscar");
-                scanf("%100[^\n]", arch);
+                system("cls");
+                printf("Imprimiendo todos los productos\n\n");
+                Mostrar_pro (info_almacen);
                 getchar();
-
-                puts("Producto a buscar es:");
-                printf("%s\n\n", arch);
-
-                Buscar_tipo(arch, info_almacen);
-                getchar();
-
                 break;
             case 6:
                 puts("lol");
@@ -117,6 +114,7 @@ int main (void)
             default:
                 printf("Valor ingresado no valido!\n");
                 getchar();
+                
 
         }
     }

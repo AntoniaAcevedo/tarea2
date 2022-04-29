@@ -9,7 +9,8 @@ typedef struct Producto Producto;
 
 typedef struct Carrito Carrito;
 
-<<<<<<< HEAD
+void Buscar_nom (char * n, Almacen * Global);
+
 void Buscar_tipo (char * Tipo, Almacen * Global); 
 
 void Buscar_marca (char * Marca, Almacen * Global);
