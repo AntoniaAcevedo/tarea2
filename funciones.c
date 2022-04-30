@@ -187,24 +187,24 @@ void agregar_producto(Almacen * Global, char * Nom, char * Marc,
         pushBack(aux_list_tip, aux_prod);
     }
 }
-Carrito * crearCarrito(char * nCarrito){
+Carrito * CrearCarrito(char * nCarrito,int cant){
     Carrito * aux=(Carrito *)malloc(sizeof(Carrito));
-    if(aux == NULL){exit(1);}
-    aux->tot_car=0;
+    if(aux == NULL){return 0;}
+    aux->tot_car=cant;
     strcpy(aux->Nom_car,nCarrito);
     aux->Productos=create_stack();
     return aux;
 }
-void Agregar_a_carr(char * nprod , int cant,char * car ,Almacen * gl){// No fun
-    Carrito * aux=(Carrito * )firstList(gl->Carritos);
+void Agregar_a_carr(char * nprod , int cant,char * car ,Almacen * gl){
     Pair * aux2=searchMap(gl->Productos,nprod);
+    Producto * aux3=(Producto *) return_value(aux2);
     if(aux2 == NULL){
-        printf("No Se Encontro tu Producto");
+        printf("No existe El producto que deseas agregar = %s",nprod);
         return;
     }
-    Producto * aux3=(Producto *) return_value(aux2);
+    Carrito * aux=(Carrito * )firstList(gl->Carritos);
     if(aux == NULL){
-        aux=CrearCarrito();
+        aux=CrearCarrito(car,cant);
         Push(aux->Productos,aux3);
         aux->tot_car++;
         pushFront(gl->Carritos,aux);
@@ -221,12 +221,13 @@ void Agregar_a_carr(char * nprod , int cant,char * car ,Almacen * gl){// No fun
             aux=(Carrito *)nextList(gl->Carritos);
         }
         if( aux == NULL){
-            aux=CrearCarrito();
+            aux=CrearCarrito(car,cant);
             Push(aux->Productos,aux3);
             aux->tot_car++;
             pushFront(gl->Carritos,aux);
         }
-    }     
+    }
+    return;     
 }
 void Mostrar_Lista_Carr(Almacen * gl){
     int totCarros=0;
@@ -239,7 +240,7 @@ void Mostrar_Lista_Carr(Almacen * gl){
         {
             totCarros++;
             printf("\"%s\"\n",aux->Nom_car);
-            printf("Total De Productos = %zd",aux->tot_car);
+            printf("Total De Productos = %zd\n",aux->tot_car);
             aux=nextList(gl->Carritos);
         }
         printf("El total de carros existentes = %d",totCarros);

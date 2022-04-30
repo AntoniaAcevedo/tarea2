@@ -119,18 +119,23 @@ int main (void)
                 printf("Indique Operacion:");
 
                 scanf("%ld",&selec3);
+                getchar();
 
                 switch (selec3)
                 {
                 case 1:
                     system("cls");
-                    printf("Ingrese el producto, la cantidad y el nombre del Carrito:");
-                    scanf("%[^\n] %d %[^\n] ",arch,&cant,nCarrIn);
+                    printf("Ingrese el producto, la cantidad y el nombre del Carrito:\n");
+                    printf("Ingrese nombre: ");
+                    scanf("%[^\n]", arch);
                     getchar();
-                    Agregar_a_carr( arch,cant,nCarrIn,info_almacen);
+                    scanf("%d",cant);
+                    getchar();
+                    scanf("%[^\n]",nCarrIn);
+                    getchar();
+                    Agregar_a_carr(arch,cant,nCarrIn,info_almacen);
+                    getchar();
                     Mostrar_Lista_Carr(info_almacen);
-                    getchar();
-                    
                     break;
                     /////
                 case 2:
@@ -149,7 +154,7 @@ int main (void)
                 case 3:
                     system("cls");
                     printf("Carros De Compra:");
-                    //Mostrar_Lista_Carr(info_almacen)//
+                    Mostrar_Lista_Carr(info_almacen);
                     //consultar si agregar opcion de eliminar un carrito de la lista//
 
                     break;
