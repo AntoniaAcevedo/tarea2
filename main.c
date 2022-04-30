@@ -115,7 +115,7 @@ int main (void)
                 printf("1. Agregar a Carrito\n");
                 printf("2. Eliminar del Carrito\n");
                 printf("3. Muestrar Carritos\n");
-                printf("4. Concretar Compra");
+                printf("4. Concretar Compra\n\n");
                 printf("Indique Operacion:");
 
                 scanf("%ld",&selec3);
@@ -146,20 +146,15 @@ int main (void)
                     Carrito * carr;
                     //carr=BuscarCarrito(nCarrIn,info_almacen);
                     //Elim_del_carr(carr);
-                    
-
-
                     break;
                     /////
                 case 3:
                     system("cls");
                     printf("Carros De Compra:");
                     Mostrar_Lista_Carr(info_almacen);
+                    getchar();
                     //consultar si agregar opcion de eliminar un carrito de la lista//
-
                     break;
-                    /////
-                    
                 case 4:
                     system("cls");
                     printf("Ingrese Nombre Del Carrito A comprar :");
@@ -199,6 +194,7 @@ int main (void)
 
                     break;
                 }
+                break;
 
             case 7:
                 puts("Saliendo del programa...");
