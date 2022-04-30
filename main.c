@@ -129,13 +129,12 @@ int main (void)
                     printf("Ingrese nombre: ");
                     scanf("%[^\n]", arch);
                     getchar();
-                    scanf("%d",cant);
+                    scanf("%d",&cant);
                     getchar();
                     scanf("%[^\n]",nCarrIn);
                     getchar();
                     Agregar_a_carr(arch,cant,nCarrIn,info_almacen);
                     getchar();
-                    Mostrar_Lista_Carr(info_almacen);
                     break;
                     /////
                 case 2:
@@ -143,14 +142,14 @@ int main (void)
                     printf("Ingrese Nombre Del Carrito :");
                     scanf("%s", nCarrIn);
                     getchar();
-                    Carrito * carr;
+                    //Carrito * carr;
                     //carr=BuscarCarrito(nCarrIn,info_almacen);
                     //Elim_del_carr(carr);
                     break;
                     /////
                 case 3:
                     system("cls");
-                    printf("Carros De Compra:");
+                    printf("Carros De Compra:\n\n");
                     Mostrar_Lista_Carr(info_almacen);
                     getchar();
                     //consultar si agregar opcion de eliminar un carrito de la lista//
