@@ -209,8 +209,7 @@ Carrito * CrearCarrito(char * nCarrito,int cant){
 
     return aux;
 }
-
-void Agregar_a_carr(char * nprod , int cant,char * car ,Almacen * gl){
+void Agregar_a_carr(char * nprod , int cantAgre,char * car ,Almacen * gl){
     Pair * aux2=searchMap(gl->Productos,nprod);
     Producto * aux3=(Producto *) return_value(aux2);
     if(aux2 == NULL){
@@ -219,10 +218,11 @@ void Agregar_a_carr(char * nprod , int cant,char * car ,Almacen * gl){
     }
     Carrito * aux=(Carrito * )firstList(gl->Carritos);
     if(aux == NULL){
-        aux=CrearCarrito(car,cant);
+        aux=CrearCarrito(car);
         Push(aux->Productos,aux3);
-        aux->tot_car++;
+        aux->tot_car=cantAgre;
         pushFront(gl->Carritos,aux);
+        printf("Producto agregado con exito ");
 
     }
     else{
@@ -231,15 +231,18 @@ void Agregar_a_carr(char * nprod , int cant,char * car ,Almacen * gl){
             if(strcmp(car,aux->Nom_car)==0){
                 Push(aux->Productos,aux3);
                 aux->tot_car++;
+                printf("Producto agregado con exito ");
+
                 return;
             }
             aux=(Carrito *)nextList(gl->Carritos);
         }
         if( aux == NULL){
-            aux=CrearCarrito(car,cant);
+            aux=CrearCarrito(car);
             Push(aux->Productos,aux3);
-            aux->tot_car++;
+            aux->tot_car=cantAgre;
             pushFront(gl->Carritos,aux);
+            printf("Producto agregado con exito ");
         }
     }
     return;     
@@ -257,16 +260,12 @@ void Mostrar_Lista_Carr(Almacen * gl){
             printf("\"%s\"\n",aux->Nom_car);
             printf("Total De Productos = %zd\n",aux->tot_car);
             aux=nextList(gl->Carritos);
+            printf("\n");
         }
+        printf("------------------------------------------\n");
         printf("El total de carros existentes = %d",totCarros);
     }
 } 
-/*/funciones Carrito //
-Carrito * BuscarCarro(char nCarrIn,Almacen * Global ){
-
-}
-
-
 void Elim_del_carr(Carrito * car){
     if(car->tot_car==0){
         printf("Tu Carro se encuentra Vacio");
@@ -277,6 +276,13 @@ void Elim_del_carr(Carrito * car){
     }
         
 }
+/*/funciones Carrito //
+Carrito * BuscarCarro(char nCarrIn,Almacen * Global ){
+
+}
+
+
+
 
 
 
