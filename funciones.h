@@ -1,7 +1,8 @@
 #ifndef FUNCIONES_H_INCLUDED
 #define FUNCIONES_H_INCLUDED
-#include "list.h"
-#include "hashmap.h"
+
+enum selec{import = 1, export, add, search, display, cartop, end_program};
+enum selec2{name = 1, tiype, brand};
 
 typedef struct Almacen Almacen; 
 
