@@ -1,8 +1,8 @@
 #ifndef FUNCIONES_H_INCLUDED
 #define FUNCIONES_H_INCLUDED
-#include "list.h"
-#include "hashmap.h"
-#include "pila.h"
+
+enum selec{import = 1, export, add, search, display, cartop, end_program};
+enum selec2{name = 1, tiype, brand};
 
 typedef struct Almacen Almacen; 
 
@@ -24,7 +24,7 @@ const char *get_csv_field (char * tmp, int k); // FUNCIONAL
 
 void importar_archivo(char * Nom_Arch, Almacen * gl); // FUNCIONAL
 
-Carrito * CrearCarrito(char * nCarrito);
+Carrito * CrearCarrito(char * nCarrito,int cant);
 
 void Agregar_a_carr(char *nprod , int cant,char * car, Almacen * gl);
 
@@ -39,7 +39,7 @@ Carrito * BuscarCarro(char * nCarrIn ,Almacen * Global);
 void Elim_del_carr(char * nCarrIn,Almacen * Global);
 
 
-
+/*
 void Concretar_Compra(); // No fun
 
 void Elim_Carrito(char nCarrIn , Almacen * gl);// No fun

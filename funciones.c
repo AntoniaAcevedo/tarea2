@@ -10,12 +10,13 @@
 #define CAP_PROD 300
 #define CAP_MT 100
 
+
 typedef struct Almacen{
     HashMap * Productos;
     HashMap * Marcas;
     HashMap * Tipos;
     List * Carritos;
-    size_t tot_prod, tot_marc, tot_tipos, tot_car; //opcional.
+    size_t tot_car; //opcional.
 }Almacen; 
 
 typedef struct Producto{
@@ -31,23 +32,27 @@ typedef struct Carrito{
     Stack * Productos; //aun no esta definida.
 }Carrito;
 
+
+// Busca productos por el nombre en un mapa de productos.
 void Buscar_nom (char * n, Almacen * Global){
-    Pair * aux= searchMap(Global ->Productos,n);
-    Producto * aux2= (Producto*) return_value(aux);
-    if (aux == NULL){
-    printf("No existe este producto");
-    return;
+    Pair * aux_pair= searchMap(Global ->Productos,n);
+    Producto * prod= (Producto*) return_value(aux_pair);
+
+    if (aux_pair == NULL){
+        printf("\nNo existe este tipo de producto");
+        return;
     }
     else{
-        printf("----Productos del tipo %s----\n", n);
+        printf("\n----Producto encontrado!----\n");
         printf("-----------------------------------------------------------------\n");
-        printf("-->%-61s Marca: %s|\n", aux2 -> Nom_prod, aux2 -> Marca);//imprime info producto
-        printf("Tipo: %-26s Stock:%4ld | Precio:%9ld |\n",aux2 -> Tipo, aux2 -> stock, aux2 -> precio);
+        printf("-->%-48s Marca: %s|\n", prod -> Nom_prod, prod -> Marca);
+        printf("Tipo: %-27s Stock:%4ld | Precio:%9ld |\n",prod -> Tipo, prod -> stock, prod -> precio);
         printf("                                                                |\n");
         printf("-----------------------------------------------------------------\n");
     }
 }
-//mostrarProductosMarca
+
+//Mostrar Productos por Marca
 void Buscar_marca (char * m, Almacen * Global){
 
     Pair * aux_pair;
@@ -76,13 +81,14 @@ void Buscar_marca (char * m, Almacen * Global){
 
     while (prod != NULL){
         printf("-->%-61s|\n",  prod->Nom_prod);//imprime info producto
-        printf("Tipo: %-26s Stock:%4ld | Precio:%9ld |\n",prod->Tipo, prod->stock, prod->precio);
+        printf("Tipo: %-27s Stock:%4ld | Precio:%9ld |\n",prod->Tipo, prod->stock, prod->precio);
         printf("                                                                |\n");
         prod = (Producto *) nextList(rec_list);
     }
     printf("-----------------------------------------------------------------\n");
     return; 
 }
+
 void Mostrar_pro (Almacen * Global){
     HashMap* aux= Global -> Productos;
     int cont= 0;
@@ -106,93 +112,101 @@ void Mostrar_pro (Almacen * Global){
     }
 
 }
-//mostrarProductosTipo
+
+//Mostrar Productos por Tipo
 void Buscar_tipo (char * t, Almacen * Global){
 
-    Pair * aux;
-    List * aux2;
-    Producto * aux3;
+    Pair * aux_pair;
+    List * rec_list;
+    Producto * prod;
 
 
-    aux = searchMap(Global->Tipos, t);
+    aux_pair = searchMap(Global->Tipos, t);
 
-    if (aux == NULL){
-        printf("No existe este tipo de producto");
+    if (aux_pair == NULL){
+        printf("\nNo existe este tipo de producto");
         return;
     }
 
-    aux2 = (List *) return_value(aux);
-    aux3= (Producto *)firstList (aux2);
+    rec_list = (List *) return_value(aux_pair);
+    prod= (Producto *) firstList(rec_list);
 
-    if (aux3 == NULL){
-        printf("NO queda");
+    if (prod == NULL){
+        printf("\nNO queda");
         return; 
     }
 
-    printf("----Productos del tipo %s----\n", t);
+    printf("\n----Productos del tipo %s----\n", t);
     printf("-----------------------------------------------------------------\n");
 
-    while (aux3 != NULL){
-        printf("-->%-61s|\n",  aux3->Nom_prod);//imprime info producto
-        printf("Marca: %-26s Stock:%4ld | Precio:%9ld |\n",aux3->Marca, aux3->stock, aux3->precio);
+    while (prod != NULL){
+        printf("-->%-61s|\n",  prod->Nom_prod);//imprime info producto
+        printf("Marca: %-26s Stock:%4ld | Precio:%9ld |\n", prod->Marca, prod->stock, prod->precio);
         printf("                                                                |\n");
-        aux3 = (Producto *) nextList(aux2);
+        prod = (Producto *) nextList(rec_list);
     }
     printf("-----------------------------------------------------------------\n");
     return; 
 }
 
+// Agrega un producto
+// Si el producto es nuevo se crean los datos y se guardan en las estructuras correspondientes.
+// Si el producto si existe se ignora la informacion y se agrega el stock.
 void agregar_producto(Almacen * Global, char * Nom, char * Marc, 
                       char * Type, size_t Price, size_t Stock){
-    Pair * aux, * aux2, * aux3;
+    Pair * prod_pair, * marc_pair, * tipo_pair;
     Producto * aux_prod;
-    List * aux_list_mar;
-    List * aux_list_tip;
+    List * marc_list;
+    List * tipo_list;
     
-    aux = (Pair  *) searchMap(Global->Productos, Nom);
-    if (aux == NULL)
+    prod_pair = (Pair  *) searchMap(Global->Productos, Nom);
+    if (prod_pair == NULL)
     {
         aux_prod = create_product(Nom, Marc, Type, Price, Stock); 
         insertMap(Global->Productos, aux_prod->Nom_prod , aux_prod);
     }
     else
     {
-        aux_prod = (Producto *) return_value(aux);
+        aux_prod = (Producto *) return_value(prod_pair);
         aux_prod->stock += Stock;
+        return;
     }
 
-    aux2 = (Pair *) searchMap(Global->Marcas, Marc);
-    if (aux2 == NULL)
+    marc_pair = (Pair *) searchMap(Global->Marcas, Marc);
+    if (marc_pair == NULL)
     {   
-        aux_list_mar = createList();
-        pushBack(aux_list_mar, aux_prod);
-        insertMap(Global->Marcas, aux_prod->Marca, aux_list_mar);
+        marc_list = createList();
+        pushBack(marc_list, aux_prod);
+        insertMap(Global->Marcas, aux_prod->Marca, marc_list);
     }
     else
     {
-        aux_list_mar = (List *) return_value(aux2);
-        pushBack(aux_list_mar, aux_prod);
+        marc_list = (List *) return_value(marc_pair);
+        pushBack(marc_list, aux_prod);
     }
 
-    aux3 = (Pair *) searchMap(Global->Tipos, Type);
-    if (aux3 == NULL)
+    tipo_pair = (Pair *) searchMap(Global->Tipos, Type);
+    if (tipo_pair == NULL)
     {
-        aux_list_tip = createList();
-        pushBack(aux_list_tip, aux_prod);
-        insertMap(Global->Tipos, aux_prod->Tipo, aux_list_tip);
+        tipo_list = createList();
+        pushBack(tipo_list, aux_prod);
+        insertMap(Global->Tipos, aux_prod->Tipo, tipo_list);
     }
     else
     {
-        aux_list_tip = (List *) return_value(aux3);
-        pushBack(aux_list_tip, aux_prod);
+        tipo_list = (List *) return_value(tipo_pair);
+        pushBack(tipo_list, aux_prod);
     }
 }
-Carrito * CrearCarrito(char * nCarrito){
+
+Carrito * CrearCarrito(char * nCarrito,int cant){
     Carrito * aux=(Carrito *)malloc(sizeof(Carrito));
-    if(aux == NULL){return 0;}
-    aux->tot_car=0;
+    if(aux == NULL) return 0;
+
+    aux->tot_car=cant;
     strcpy(aux->Nom_car,nCarrito);
     aux->Productos=create_stack();
+
     return aux;
 }
 void Agregar_a_carr(char * nprod , int cantAgre,char * car ,Almacen * gl){
@@ -204,7 +218,7 @@ void Agregar_a_carr(char * nprod , int cantAgre,char * car ,Almacen * gl){
     }
     Carrito * aux=(Carrito * )firstList(gl->Carritos);
     if(aux == NULL){
-        aux=CrearCarrito(car);
+        aux=CrearCarrito(car,cantAgre);
         Push(aux->Productos,aux3);
         aux->tot_car=cantAgre;
         pushFront(gl->Carritos,aux);
@@ -224,7 +238,7 @@ void Agregar_a_carr(char * nprod , int cantAgre,char * car ,Almacen * gl){
             aux=(Carrito *)nextList(gl->Carritos);
         }
         if( aux == NULL){
-            aux=CrearCarrito(car);
+            aux=CrearCarrito(car,cantAgre);
             Push(aux->Productos,aux3);
             aux->tot_car=cantAgre;
             pushFront(gl->Carritos,aux);
@@ -384,7 +398,11 @@ const char *get_csv_field (char * tmp, int k) {
 
 Producto * create_product(char * Nom, char * Marc, char * Tipo, size_t costo, size_t stock){
     Producto * new_prod = (Producto *) malloc (sizeof(Producto));
-    // Comprobar reserva
+    if (new_prod == NULL)
+    {
+        perror("No se pudo realizar reserva para  producto\n");
+        exit(1);
+    }
 
     strcpy(new_prod->Nom_prod, Nom);
     strcpy(new_prod->Marca, Marc);
@@ -395,6 +413,7 @@ Producto * create_product(char * Nom, char * Marc, char * Tipo, size_t costo, si
     return new_prod;
 }
 
+// Importar archivo con formato
 void importar_archivo(char * Nom_Arch, Almacen * gl){
     FILE * entrada;
     char str[MAX];
@@ -446,9 +465,14 @@ void importar_archivo(char * Nom_Arch, Almacen * gl){
     return;
 }
 
+// Guarda memoria e inicializa un datodel tipo Almacen, retornandolo.
 Almacen * create_Almacen(void){
     Almacen * new_alm = (Almacen *) malloc(sizeof(Almacen));
-    // Comprobar reserva
+    if(new_alm ==  NULL)
+    {
+        perror("No se pudo guardar memoria para el almacen\n");
+        exit(1);
+    }
 
     new_alm->Carritos = createList();
     new_alm->Marcas = createMap(CAP_MT);
@@ -456,15 +480,12 @@ Almacen * create_Almacen(void){
     new_alm->Tipos = createMap(CAP_MT);
 
     new_alm->tot_car = 0;
-    new_alm->tot_marc = 0;
-    new_alm->tot_prod = 0;
-    new_alm->tot_tipos = 0;
 
     return new_alm;
 }
 
 
-// Se recorre hashmapde marcas por ser de menor tamanyo que  el de productos.
+// Se recorre hashmap de marcas por ser de menor tamanyo que el de productos.
 void exportar_archivo(Almacen * Global, char * arch){
     FILE * salida;
     Pair  * rec_marc;
