@@ -16,15 +16,16 @@ int main (void)
         long selec4;
         long selec5;
         
-        char arch[MAX] = "";
+        char arch[MAX], nom[MAX], marc[MAX], type[MAX];
         char nCarrIn[MAX]="";
         int cant;
-
+        size_t size, stock; 
+        Carrito * aux_car;
 
         system("cls");
-        printf("MENU RAWR XDDDDDDDDDDDDDDD\n\n");
-
         printf(
+            "MENU RAWR XDDDDDDDDDDDDDDD\n\n"
+
             "1. Importar productos\n"
             "2. Exportar productos\n"
             "3. Agregar productos\n"
@@ -41,7 +42,7 @@ int main (void)
 
         switch (selec)
         {
-            case 1:
+            case import:
                 system("cls");
                 puts("Ingrese el nombre del archivo que desea importar");
                 scanf("%s", arch);
@@ -52,7 +53,8 @@ int main (void)
                 importar_archivo(arch, info_almacen);
                 getchar();
                 break;
-            case 2:
+
+            case export:
                 system("cls");
                 puts("Ingrese el nombre del archivo que desea exportar");
                 scanf("%s", arch);
@@ -62,155 +64,190 @@ int main (void)
 
                 exportar_archivo(info_almacen, arch);
                 getchar();
-            break;
-            case 3:
-                puts("lol");
+                break;
+
+            case add:
+                system("cls");
+
+                printf("Ingrese el nombre, marca y tipo del producto que \n"
+                        "desea agregar, separados por un salto de linea (enter):\n");
+                scanf("%[^\n] %[^\n] %[^\n]", nom, marc, type);
+                getchar();
+
+                printf("Ingrese la cantidad de producto que desea agregar y su\n"
+                        "precio, separados por un salto de linea:\n");
+                scanf("%u", &stock);
+                getchar();
+                scanf("%u", &size);
+                getchar();
+
+                agregar_producto(info_almacen, nom, marc, type, size, stock);
+                printf("Producto agregado exitosamente!\n");
+
                 getchar();
                 break;
-            case 4:                
-                printf("1. Nombre Producto\n");
-                printf("2. Tipo\n");
-                printf("3. Marca\n");
-                printf("Ingresa parametro de busqueda:  ");
+
+            case search:   
+                system("cls");             
+                printf( "1. Nombre Producto\n"
+                        "2. Tipo\n"
+                        "3. Marca\n\n"
+
+                        "Ingresa parametro de busqueda:  ");
+                
+
                 scanf("%ld",&selec2);
                 getchar();
+
                 switch(selec2){
-                    case 1:
-                    system("cls");
-                    printf("Ingrese nombre: ");
-                    scanf("%[^\n]", arch);
-                    getchar();
-                    Buscar_nom (arch, info_almacen);
-                    getchar();
-                    break;
-                    ////
-                    case 2:
-                    system("cls");
-                    printf("Ingrese tipo: ");
-                    scanf("%s", arch);
-                    getchar();
-                    Buscar_tipo (arch,info_almacen);
-                    getchar();
-                    break;
-                    ////
-                    case 3:
-                    system("cls");
-                    printf("Ingrese marca: ");
-                    scanf("%s", arch);
-                    getchar();
-                    Buscar_marca (arch, info_almacen);
-                    getchar();
-                    break;
+                    case name:
+                        system("cls");
+                        printf("Ingrese nombre: ");
+                        scanf("%[^\n]", arch);
+                        getchar();
+
+                        Buscar_nom (arch, info_almacen);
+                        getchar();
+                        break;
+                    
+                    case tiype:
+                        system("cls");
+                        printf("Ingrese tipo: ");
+                        scanf("%s", arch);
+                        getchar();
+
+                        Buscar_tipo (arch,info_almacen);
+                        getchar();
+                        break;
+                    
+                    case brand:
+                        system("cls");
+                        printf("Ingrese marca: ");
+                        scanf("%s", arch);
+                        getchar();
+
+                        Buscar_marca (arch, info_almacen);
+                        getchar();
+                        break;
+                    
+                    default:
+                        printf("\nOpcion no valida!");
+                        getchar();
+                        break;
                 }
                 break;
-            case 5:
+
+            case display:
                 system("cls");
                 printf("Imprimiendo todos los productos\n\n");
+                
                 Mostrar_pro (info_almacen);
                 getchar();
                 break;
-                //OPERACIONES CARRITO//
-            case 6: 
 
-                printf("1. Agregar a Carrito\n");
-                printf("2. Eliminar del Carrito\n");
-                printf("3. Muestrar Carritos\n");
-                printf("4. Concretar Compra\n\n");
-                printf("Indique Operacion:");
-
-                scanf("%ld",&selec3);
+            case cartop: 
+                system("cls");
+                printf( "1. Agregar a Carrito\n"
+                        "2. Eliminar del Carrito\n"
+                        "3. Muestrar Carritos\n"
+                        "4. Concretar Compra\n\n"
+                        
+                        "Indique Operacion:    ");
+                
+                scanf("%ld",&selec2);
                 getchar();
 
-                switch (selec3)
+                switch (selec2)
                 {
                 case 1:
                     system("cls");
                     printf("Ingrese el producto, la cantidad y el nombre del Carrito\n");
-                    printf("Ingrese nombre: ");
+
+                    printf("\nIngrese nombre del producto:    \n");
                     scanf("%[^\n]", arch);
                     getchar();
-                    printf("Ingrese cantidad: ");
+
+                    printf("\nIngrese la cantidad de producto:    \n");
                     scanf("%d",&cant);
                     getchar();
-                    printf("Ingrese nombre de su Carro:");
+
+                    printf("\nIngrese nombre de su carrito:     \n");
                     scanf("%[^\n]",nCarrIn);
                     getchar();
+
                     Agregar_a_carr(arch,cant,nCarrIn,info_almacen);
                     getchar();
                     break;
-                    /////
+                    
                 case 2:
                     system("cls");
                     printf("Ingrese Nombre Del Carrito :");
-                    scanf("%s", nCarrIn);
+                    scanf("%[^\n]", nCarrIn);
                     getchar();
-                    Elim_del_carr(nCarrIn,info_almacen);
+
+                    Elim_del_carr(nCarrIn ,info_almacen);
+
+                    getchar();
                     break;
-                    /////
+                    
                 case 3:
                     system("cls");
                     printf("Carros De Compra:\n\n");
                     Mostrar_Lista_Carr(info_almacen);
                     getchar();
+                    //consultar si agregar opcion de eliminar un carrito de la lista//
                     break;
+                
                 case 4:
                     system("cls");
                     printf("Ingrese Nombre Del Carrito A comprar :");
-                    scanf("%s", nCarrIn);
+                    scanf("%[^\n]", nCarrIn);
                     getchar();
-                    Carrito * carr=(Carrito *) BuscarCarro(nCarrIn,info_almacen);
-                    if (carr == NULL){
-                        printf("No Se ah encontrado tu carro");
+
+                    aux_car = BuscarCarro(nCarrIn, info_almacen);
+                    if(aux_car == NULL)
+                    {
+                        printf("\nSu carrito no existe!\n");
+                        getchar();
                         break;
                     }
-                    //VoltearyMostrarCarro(carr);
 
-                    printf("Desea Concretar Su compra :");
-                    printf("1. SI");
-                    printf("2. NO");
+                    VoltearyMostrarCarro(aux_car);
+                    printf("centinelun");
+                    getchar();
+                    /*
+                    printf( "\nDesea Concretar Su compra :\n"
+                            "1. SI"
+                            "2. NO");
 
                     scanf("%ld", &selec4);
+                    getchar();
+
                     switch (selec4)
                     {
                     case 1:
                         //Concretar_Compra(nCarrIn,info_almacen);//
+                        //Elim_Carrito(nCarrIn,info_almacen);//
                         break;
                         //////
                     case 2:
-                        printf("Desea Eliminar Su carro :");
-                        printf("1. SI");
-                        printf("2. NO");
-
-                        scanf("%ld", &selec5);
-                        switch (selec5)
-                        {
-                        case 1:
-                            //Elim_Carrito(nCarrIn,info_almacen);//
-                            break;
-                            /////
-                        case 2:
-                            break;
-                            /////
-                        }
+                        ///
                         break;
-                    }
-
-
+                    }*/
                     break;
                 }
                 break;
 
-            case 7:
+            case end_program:
                 puts("Saliendo del programa...");
                 getchar();
                 return 0;
-            break;
+                break;
 
             default:
                 printf("Valor ingresado no valido!\n");
                 getchar();
-
-
+                break;
         }
     }
 }

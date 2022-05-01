@@ -24,13 +24,13 @@ const char *get_csv_field (char * tmp, int k); // FUNCIONAL
 
 void importar_archivo(char * Nom_Arch, Almacen * gl); // FUNCIONAL
 
-Carrito * CrearCarrito(char * nCarrito,int cant);
+Carrito * CrearCarrito(char * nCarrito);
 
 void Agregar_a_carr(char *nprod , int cant,char * car, Almacen * gl);
 
 void Mostrar_Lista_Carr(Almacen * gl); // MED Funcional
 
-void mostrarCarro(Stack * Carr);
+//void mostrarCarro(Stack * Carr);
 
 void VoltearyMostrarCarro(Carrito * car);
 

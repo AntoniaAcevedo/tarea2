@@ -199,11 +199,11 @@ void agregar_producto(Almacen * Global, char * Nom, char * Marc,
     }
 }
 
-Carrito * CrearCarrito(char * nCarrito,int cant){
+Carrito * CrearCarrito(char * nCarrito){
     Carrito * aux=(Carrito *)malloc(sizeof(Carrito));
     if(aux == NULL) return 0;
 
-    aux->tot_car=cant;
+    aux->tot_car=0;
     strcpy(aux->Nom_car,nCarrito);
     aux->Productos=create_stack();
 
@@ -218,9 +218,9 @@ void Agregar_a_carr(char * nprod , int cantAgre,char * car ,Almacen * gl){
     }
     Carrito * aux=(Carrito * )firstList(gl->Carritos);
     if(aux == NULL){
-        aux=CrearCarrito(car,cantAgre);
+        aux=CrearCarrito(car);
         Push(aux->Productos,aux3);
-        aux->tot_car=cantAgre;
+        aux->tot_car+=cantAgre;
         pushFront(gl->Carritos,aux);
         printf("Producto agregado con exito ");
 
@@ -230,7 +230,8 @@ void Agregar_a_carr(char * nprod , int cantAgre,char * car ,Almacen * gl){
         {
             if(strcmp(car,aux->Nom_car)==0){
                 Push(aux->Productos,aux3);
-                aux->tot_car++;
+                aux->tot_car += cantAgre;
+
                 printf("Producto agregado con exito ");
 
                 return;
@@ -238,7 +239,7 @@ void Agregar_a_carr(char * nprod , int cantAgre,char * car ,Almacen * gl){
             aux=(Carrito *)nextList(gl->Carritos);
         }
         if( aux == NULL){
-            aux=CrearCarrito(car,cantAgre);
+            aux=CrearCarrito(car);
             Push(aux->Productos,aux3);
             aux->tot_car=cantAgre;
             pushFront(gl->Carritos,aux);
@@ -258,7 +259,7 @@ void Mostrar_Lista_Carr(Almacen * gl){
         {
             totCarros++;
             printf("\"%s\"\n",aux->Nom_car);
-            printf("Total De Productos = %zd\n",aux->tot_car);
+            printf("Total De Productos = %u\n", (unsigned int) aux->tot_car);
             aux=nextList(gl->Carritos);
             printf("\n");
         }
@@ -266,62 +267,75 @@ void Mostrar_Lista_Carr(Almacen * gl){
         printf("El total de carros existentes = %d",totCarros);
     }
 } 
+
 void Elim_del_carr(char * nCar, Almacen * gl){
-    Carrito * car=BuscarCarro(nCar,gl);
+    Carrito * car = BuscarCarro(nCar,gl);
     if(car == NULL){
-        printf("No Se a encontado tu carro: %s",nCar);
+        printf("\nNo Se a encontado tu carro: %s",nCar);
         return;
     }
     if(car->tot_car==0){
-        printf("Tu Carro se encuentra Vacio");
+        printf("\nTu Carro se encuentra Vacio");
     }
     else{
         Pop(car->Productos);
         car->tot_car--;
-        printf("Ultimo producto ingresado, eliminado con exito");
+        printf("\nUltimo producto ingresado, eliminado con exito");
     }
         
 }
+
 void mostrarCarro(Stack * Carr){
-    printf("----Productos de Tu Carro ----\n");
+    printf("\n----Productos de Tu Carro ----\n");
     printf("-----------------------------------------------------------------\n");
     int precioAux=0,precioTotal=0;
-    while(Carr != NULL){
-        Producto * aux=(Producto *)Top(Carr);
-        printf("-->%-61s|\n",  aux->Nom_prod);//imprime info producto
-        printf("Marca: %-26s Stock:%4ld | Precio:%9ld |\n",aux->Marca, aux->stock, aux->precio);
+
+    while(((Producto *) Top(Carr)) != NULL){
+        Producto * prod = (Producto *) Top(Carr);
+
+        printf("-->%-61s|\n",  prod->Nom_prod);
+        printf("Marca: %-26s Stock:%4ld | Precio:%9ld |\n", prod->Marca, prod->stock, prod->precio);
         printf("                                                                |\n");
-        precioAux=aux->stock * aux->precio;
+
+        precioAux= prod->stock * prod->precio;
+        precioTotal = precioTotal + precioAux;
+
         Pop(Carr);
-        precioTotal=precioTotal + precioAux;
     }
-    printf("%d",precioTotal);
+    printf("\n El precio total es : %d\n", precioTotal);
     printf("-----------------------------------------------------------------\n");
     return; 
 }
 
 void VoltearyMostrarCarro(Carrito * car){
-    Stack * aux=create_stack();
-    while (car != NULL){
-        Producto * aux2=(Producto *)Top(car->Productos);
-        Push(aux,aux2);
+    Stack * aux_stack = create_stack();
+    size_t copia_tot = car->tot_car;
+
+    while (copia_tot > 0){
+        Producto * aux_prod = (Producto *) Top (car->Productos);
+        printf("%s\n\n", aux_prod->Nom_prod);
+        Push(aux_stack, aux_prod);
         Pop(car->Productos);
+        copia_tot -- ;
     }
-    mostrarCarro(aux);
+
+    mostrarCarro(aux_stack);
 }
 
-Carrito * BuscarCarro(char * nCarrIn,Almacen * Global ){\
-    Carrito * aux=(Carrito *)firstList(Global->Carritos);
+Carrito * BuscarCarro(char * nCarrIn,Almacen * Global ){
+    Carrito * aux= (Carrito *) firstList(Global->Carritos);
+
     while(aux != NULL){
         if(strcmp(nCarrIn,aux->Nom_car)==0){
             printf("%s",aux->Nom_car);
             return aux;
             break;
         }
-        aux=nextList(Global->Carritos);
+        aux= (Carrito *) nextList(Global->Carritos);
     }
     return NULL;
 }
+
 /*/funciones Carrito //
 void Concretar_Compra(char nCarrIn){// No fun
 
