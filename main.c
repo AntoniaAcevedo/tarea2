@@ -156,10 +156,10 @@ int main (void)
                 
                 scanf("%ld",&selec2);
                 getchar();
-
+                
                 switch (selec2)
                 {
-                case 1:
+                case add_car:
                     system("cls");
                     printf("Ingrese el producto, la cantidad y el nombre del Carrito\n");
 
@@ -179,7 +179,7 @@ int main (void)
                     getchar();
                     break;
                     
-                case 2:
+                case delete_car:
                     system("cls");
                     printf("Ingrese Nombre Del Carrito :");
                     scanf("%[^\n]", nCarrIn);
@@ -190,7 +190,7 @@ int main (void)
                     getchar();
                     break;
                     
-                case 3:
+                case show_car:
                     system("cls");
                     printf("Carros De Compra:\n\n");
                     Mostrar_Lista_Carr(info_almacen);
@@ -198,7 +198,7 @@ int main (void)
                     //consultar si agregar opcion de eliminar un carrito de la lista//
                     break;
                 
-                case 4:
+                case buy_car:
                     system("cls");
                     printf("Ingrese Nombre Del Carrito A comprar :");
                     scanf("%[^\n]", nCarrIn);
@@ -216,6 +216,20 @@ int main (void)
                     printf("centinelun");
                     getchar();
                     /*
+
+                    ||| MENSAJE |||
+
+                    ++++ Solo luego de concretar la compra se borra el carrito
+                    ++++ Considerando el tiempo, nos conviene borrar el carrito cuando
+                    ++++ hay conflictos de stock,por lo que en cualquier siatuacion se borraria, 
+                    ++++ no se le pregunta al usuario.
+
+                    ++++ Una solucion seria permitir borrar los productos que generen conflicto,
+                    ++++ dentro de la funcion que comprueba el stock,
+                    ++++ pero a esta altura puede que sea mucho trabajo
+
+                    ||| FIN MENSAJE |||
+
                     printf( "\nDesea Concretar Su compra :\n"
                             "1. SI"
                             "2. NO");

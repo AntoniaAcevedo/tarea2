@@ -3,6 +3,7 @@
 
 enum selec{import = 1, export, add, search, display, cartop, end_program};
 enum selec2{name = 1, tiype, brand};
+enum car_selec{add_car = 1, delete_car, show_car, buy_car};
 
 typedef struct Almacen Almacen; 
 
@@ -29,8 +30,6 @@ Carrito * CrearCarrito(char * nCarrito);
 void Agregar_a_carr(char *nprod , int cant,char * car, Almacen * gl);
 
 void Mostrar_Lista_Carr(Almacen * gl); // MED Funcional
-
-//void mostrarCarro(Stack * Carr);
 
 void VoltearyMostrarCarro(Carrito * car);
 
