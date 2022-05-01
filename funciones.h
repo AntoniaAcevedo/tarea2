@@ -2,6 +2,7 @@
 #define FUNCIONES_H_INCLUDED
 #include "list.h"
 #include "hashmap.h"
+#include "pila.h"
 
 typedef struct Almacen Almacen; 
 
@@ -28,12 +29,14 @@ Carrito * CrearCarrito(char * nCarrito);
 void Agregar_a_carr(char *nprod , int cant,char * car, Almacen * gl);
 
 void Mostrar_Lista_Carr(Almacen * gl); // MED Funcional
-/*/funciones Carrito //
- // No fun 
 
-//Carrito * BuscarCarrito(char * nCarrIn, Almacen * gl);//No
+void mostrarCarro(Stack * Carr);
 
-//void Elim_del_carr(Carrito * car); // MED Funcional
+void VoltearyMostrarCarro(Carrito * car);
+
+Carrito * BuscarCarro(char * nCarrIn ,Almacen * Global);
+
+void Elim_del_carr(char * nCarrIn,Almacen * Global);
 
 
 
@@ -43,6 +46,7 @@ void Elim_Carrito(char nCarrIn , Almacen * gl);// No fun
 
 void ActualizarStock(char * nCarrIn,Almacen * gl);// No fun
 /////*/
+
 
 void agregar_producto(Almacen * Global, char * Nom, char * Marc, 
                       char * Type, size_t Price, size_t Stock); // FUNCIONAL

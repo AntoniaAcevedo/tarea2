@@ -35,7 +35,7 @@ void Buscar_nom (char * n, Almacen * Global){
     Pair * aux= searchMap(Global ->Productos,n);
     Producto * aux2= (Producto*) return_value(aux);
     if (aux == NULL){
-    printf("No existe este tipo de producto");
+    printf("No existe este producto");
     return;
     }
     else{
@@ -199,7 +199,7 @@ void Agregar_a_carr(char * nprod , int cantAgre,char * car ,Almacen * gl){
     Pair * aux2=searchMap(gl->Productos,nprod);
     Producto * aux3=(Producto *) return_value(aux2);
     if(aux2 == NULL){
-        printf("No existe El producto que deseas agregar = %s",nprod);
+        printf("\nNo existe El producto que deseas agregar = %s",nprod);
         return;
     }
     Carrito * aux=(Carrito * )firstList(gl->Carritos);
@@ -252,26 +252,63 @@ void Mostrar_Lista_Carr(Almacen * gl){
         printf("El total de carros existentes = %d",totCarros);
     }
 } 
-void Elim_del_carr(Carrito * car){
+void Elim_del_carr(char * nCar, Almacen * gl){
+    Carrito * car=BuscarCarro(nCar,gl);
+    if(car == NULL){
+        printf("No Se a encontado tu carro: %s",nCar);
+        return;
+    }
     if(car->tot_car==0){
         printf("Tu Carro se encuentra Vacio");
     }
     else{
         Pop(car->Productos);
         car->tot_car--;
+        printf("Ultimo producto ingresado, eliminado con exito");
     }
         
 }
-/*/funciones Carrito //
-Carrito * BuscarCarro(char nCarrIn,Almacen * Global ){
-
+void mostrarCarro(Stack * Carr){
+    printf("----Productos de Tu Carro ----\n");
+    printf("-----------------------------------------------------------------\n");
+    int precioAux=0,precioTotal=0;
+    while(Carr != NULL){
+        Producto * aux=(Producto *)Top(Carr);
+        printf("-->%-61s|\n",  aux->Nom_prod);//imprime info producto
+        printf("Marca: %-26s Stock:%4ld | Precio:%9ld |\n",aux->Marca, aux->stock, aux->precio);
+        printf("                                                                |\n");
+        precioAux=aux->stock * aux->precio;
+        Pop(Carr);
+        precioTotal=precioTotal + precioAux;
+    }
+    printf("%d",precioTotal);
+    printf("-----------------------------------------------------------------\n");
+    return; 
 }
 
+void VoltearyMostrarCarro(Carrito * car){
+    Stack * aux=create_stack();
+    while (car != NULL){
+        Producto * aux2=(Producto *)Top(car->Productos);
+        Push(aux,aux2);
+        Pop(car->Productos);
+    }
+    mostrarCarro(aux);
+}
 
-
-
-
-
+Carrito * BuscarCarro(char * nCarrIn,Almacen * Global ){\
+    Carrito * aux=(Carrito *)firstList(Global->Carritos);
+    while(aux != NULL){
+        if(strcmp(nCarrIn,aux->Nom_car)==0){
+            printf("%s",aux->Nom_car);
+            return aux;
+            break;
+        }
+        aux=nextList(Global->Carritos);
+    }
+    return NULL;
+}
+/*/funciones Carrito //
 void Concretar_Compra(char nCarrIn){// No fun
 
 } 
@@ -295,7 +332,6 @@ void Elim_Carrito(char nCarrIn , Almacen * Global){
 }
 
 //void ActualizarStock(char nCarrIn,Almacen * Global){// No fun
-
 
 ///*/
 

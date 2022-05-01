@@ -125,12 +125,14 @@ int main (void)
                 {
                 case 1:
                     system("cls");
-                    printf("Ingrese el producto, la cantidad y el nombre del Carrito:\n");
+                    printf("Ingrese el producto, la cantidad y el nombre del Carrito\n");
                     printf("Ingrese nombre: ");
                     scanf("%[^\n]", arch);
                     getchar();
+                    printf("Ingrese cantidad: ");
                     scanf("%d",&cant);
                     getchar();
+                    printf("Ingrese nombre de su Carro:");
                     scanf("%[^\n]",nCarrIn);
                     getchar();
                     Agregar_a_carr(arch,cant,nCarrIn,info_almacen);
@@ -142,9 +144,7 @@ int main (void)
                     printf("Ingrese Nombre Del Carrito :");
                     scanf("%s", nCarrIn);
                     getchar();
-                    //Carrito * carr;
-                    //carr=BuscarCarrito(nCarrIn,info_almacen);
-                    //Elim_del_carr(carr);
+                    Elim_del_carr(nCarrIn,info_almacen);
                     break;
                     /////
                 case 3:
@@ -152,14 +152,19 @@ int main (void)
                     printf("Carros De Compra:\n\n");
                     Mostrar_Lista_Carr(info_almacen);
                     getchar();
-                    //consultar si agregar opcion de eliminar un carrito de la lista//
                     break;
                 case 4:
                     system("cls");
                     printf("Ingrese Nombre Del Carrito A comprar :");
-                    scanf("%s\n\n", nCarrIn);
+                    scanf("%s", nCarrIn);
                     getchar();
-                    //mostrarCarrito(nCarrIn);//
+                    Carrito * carr=(Carrito *) BuscarCarro(nCarrIn,info_almacen);
+                    if (carr == NULL){
+                        printf("No Se ah encontrado tu carro");
+                        break;
+                    }
+                    //VoltearyMostrarCarro(carr);
+
                     printf("Desea Concretar Su compra :");
                     printf("1. SI");
                     printf("2. NO");
