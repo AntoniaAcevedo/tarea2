@@ -10,11 +10,7 @@ int main (void)
     while (1){
 
        // ¬.¬
-        long selec;
-        long selec2;
-        long selec3;
-        long selec4;
-        long selec5;
+        long selec, selec2;
         
         char arch[MAX], nom[MAX], marc[MAX], type[MAX];
         char nCarrIn[MAX]="";
@@ -24,7 +20,7 @@ int main (void)
 
         system("cls");
         printf(
-            "MENU RAWR XDDDDDDDDDDDDDDD\n\n"
+            "++ Almacen ++\n\n"
 
             "1. Importar productos\n"
             "2. Exportar productos\n"
@@ -113,7 +109,7 @@ int main (void)
                     case tiype:
                         system("cls");
                         printf("Ingrese tipo: ");
-                        scanf("%s", arch);
+                        scanf("%[^\n]", arch);
                         getchar();
 
                         Buscar_tipo (arch,info_almacen);
@@ -123,7 +119,7 @@ int main (void)
                     case brand:
                         system("cls");
                         printf("Ingrese marca: ");
-                        scanf("%s", arch);
+                        scanf("%[^\n]", arch);
                         getchar();
 
                         Buscar_marca (arch, info_almacen);
@@ -168,7 +164,7 @@ int main (void)
                     getchar();
 
                     printf("\nIngrese la cantidad de producto:    \n");
-                    scanf("%d",&cant);
+                    scanf("%u",&cant);
                     getchar();
 
                     printf("\nIngrese nombre de su carrito:     \n");
@@ -204,50 +200,8 @@ int main (void)
                     scanf("%[^\n]", nCarrIn);
                     getchar();
 
-                    aux_car = BuscarCarro(nCarrIn, info_almacen);
-                    if(aux_car == NULL)
-                    {
-                        printf("\nSu carrito no existe!\n");
-                        getchar();
-                        break;
-                    }
-
-                    VoltearyMostrarCarro(aux_car);
-                    printf("centinelun");
+                    concretar_compra(nCarrIn, info_almacen);
                     getchar();
-                    /*
-
-                    ||| MENSAJE |||
-
-                    ++++ Solo luego de concretar la compra se borra el carrito
-                    ++++ Considerando el tiempo, nos conviene borrar el carrito cuando
-                    ++++ hay conflictos de stock,por lo que en cualquier siatuacion se borraria, 
-                    ++++ no se le pregunta al usuario.
-
-                    ++++ Una solucion seria permitir borrar los productos que generen conflicto,
-                    ++++ dentro de la funcion que comprueba el stock,
-                    ++++ pero a esta altura puede que sea mucho trabajo
-
-                    ||| FIN MENSAJE |||
-
-                    printf( "\nDesea Concretar Su compra :\n"
-                            "1. SI"
-                            "2. NO");
-
-                    scanf("%ld", &selec4);
-                    getchar();
-
-                    switch (selec4)
-                    {
-                    case 1:
-                        //Concretar_Compra(nCarrIn,info_almacen);//
-                        //Elim_Carrito(nCarrIn,info_almacen);//
-                        break;
-                        //////
-                    case 2:
-                        ///
-                        break;
-                    }*/
                     break;
                 }
                 break;

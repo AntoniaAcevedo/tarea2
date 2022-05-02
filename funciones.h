@@ -11,25 +11,25 @@ typedef struct Producto Producto;
 
 typedef struct Carrito Carrito;
 
-void Buscar_nom (char * n, Almacen * Global);// FUNCIONAL
+void Buscar_nom (char * n, Almacen * Global);
 
-void Buscar_tipo (char * Tipo, Almacen * Global); // FUNCIONAL
+void Buscar_tipo (char * Tipo, Almacen * Global); 
 
-void Buscar_marca (char * Marca, Almacen * Global);// FUNCIONAL
+void Buscar_marca (char * Marca, Almacen * Global);
 
-void Mostrar_pro (Almacen * Global); // FUNCIONAL
+void Mostrar_pro (Almacen * Global); 
 
-Producto * create_product(char * Nom, char * Marc, char * Tipo, size_t stock, size_t precio); //FUNCIONAL
+Producto * create_product(char * Nom, char * Marc, char * Tipo, size_t stock, size_t precio); 
 
-const char *get_csv_field (char * tmp, int k); // FUNCIONAL
+const char *get_csv_field (char * tmp, int k); 
 
-void importar_archivo(char * Nom_Arch, Almacen * gl); // FUNCIONAL
+void importar_archivo(char * Nom_Arch, Almacen * gl); 
 
 Carrito * CrearCarrito(char * nCarrito);
 
 void Agregar_a_carr(char *nprod , int cant,char * car, Almacen * gl);
 
-void Mostrar_Lista_Carr(Almacen * gl); // MED Funcional
+void Mostrar_Lista_Carr(Almacen * gl); 
 
 void VoltearyMostrarCarro(Carrito * car);
 
@@ -37,22 +37,14 @@ Carrito * BuscarCarro(char * nCarrIn ,Almacen * Global);
 
 void Elim_del_carr(char * nCarrIn,Almacen * Global);
 
-
-/*
-void Concretar_Compra(); // No fun
-
-void Elim_Carrito(char nCarrIn , Almacen * gl);// No fun
-
-void ActualizarStock(char * nCarrIn,Almacen * gl);// No fun
-/////*/
-
-
 void agregar_producto(Almacen * Global, char * Nom, char * Marc, 
-                      char * Type, size_t Price, size_t Stock); // FUNCIONAL
+                      char * Type, size_t Price, size_t Stock); 
 
-Almacen * create_Almacen(void); // FUNCIONAL
+Almacen * create_Almacen(void); 
 
 void exportar_archivo(Almacen * Global, char * arch);
+
+void concretar_compra(char * nom_carr, Almacen * gl);
 
 
 #endif // FUNCIONES_H_INCLUDED
