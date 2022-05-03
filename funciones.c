@@ -332,12 +332,32 @@ void eliminar_carrito(Almacen * gl, Carrito * carr){
     return;
 }
 
+void actualizar_Stock(Almacen * gl, char * prod, size_t rest)
+{
+    Pair * aux_pair;
+    Producto * product;
+
+
+    aux_pair = searchMap(gl->Productos, prod);
+    if(aux_pair == NULL)
+    {
+        printf("Error FATAL al buscar su producto!\n");
+        exit(1);
+    } 
+
+    product = (Producto *) return_value(aux_pair);
+    product->stock = product->stock - rest;
+
+    return;
+}
+
 // concreta la compra del carrito leido
 void concretar_compra(char * nom_carr, Almacen * gl){
-    Producto * prod, * anterior;
+    Producto * prod;
     char cmpr_nom[MAX];
     Carrito * carr;
-    size_t temp = 0;
+    size_t temp = 1;
+    size_t stock_ant;
 
     carr = BuscarCarro(nom_carr, gl);
     if (carr == NULL)
@@ -351,7 +371,7 @@ void concretar_compra(char * nom_carr, Almacen * gl){
     printf("Comprobando productos....\n");
 
     prod = (Producto *) Top (carr->Productos);
-    anterior = prod;
+    stock_ant = prod->stock;
     strcpy(cmpr_nom, prod->Nom_prod);
 
     while (prod != NULL){
@@ -359,12 +379,13 @@ void concretar_compra(char * nom_carr, Almacen * gl){
         {
             Pop(carr->Productos);
             prod = Top(carr->Productos);
-
+            if (prod == NULL) break;
+            stock_ant = prod->stock;
             temp++;
             continue;
         }
 
-        if (temp > anterior->stock)
+        if (temp > stock_ant)
         {
             printf("\nNo hay suficientes productos para concretar su compra!\n");
             printf("Se eliminara el carrito...\n");
@@ -372,21 +393,24 @@ void concretar_compra(char * nom_carr, Almacen * gl){
             return;
         }
 
-        anterior->stock = anterior->stock - temp;
-        temp = 0;
+        actualizar_Stock(gl, cmpr_nom, temp);
+        printf("%ld\n", temp);
+        temp = 1;
+        
         strcpy(cmpr_nom, prod->Nom_prod);
-        anterior = prod;
         Pop(carr->Productos);
         prod = Top(carr->Productos);
     }
 
-    if (temp > anterior->stock)
+    if (temp > stock_ant)
     {
         printf("\nNo hay suficientes productos para concretar su compra!\n");
         printf("Se eliminara el carrito...\n");
         eliminar_carrito(gl, carr);
         return;
     }
+
+    actualizar_Stock(gl, cmpr_nom, temp);
 
     printf( "No se han detectado problemas,\n"
             "compra concretada y carrito eliminado!\n");
