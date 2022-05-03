@@ -31,18 +31,27 @@ Este punto consiste en una lista de cualidades positivas y por mejorar de cada i
 
 
 -Antonia Acevedo
+
 AC[!]Mejorar la familiarizacion con github, para poder realizar mas commits propios.
+
 []
+
 JM[+]Buen desempeñó grupal y en las funciones Realizadas
 
--Alexandra 
+-Alexandra Mendoza
+
 AC[+]Muy bien trabajado, apoyando constantemente a los demas ademas de realizar su trabajo con un desempeño perfecto y efectivo.
+
 []
+
 JM[+]Proactiva y con dedicación en la perfección del trabajo.
 
 -Jorge Morgado
+
 AC[+] Trabajo de forma correcta, solo falto un poco mas de tiempo para poder finalizar su trabajo. 
+
 []
+
 JM[!]Por mejorar aspectos y detalles de ciertas funciones.
 
 (detalle respecto a los commits y contribuciones del trabajo que aparecen en github,lo sucedido es que no nos manejabamos en el grupo respecto a la actualizacion remota del repositorio y, las actualizaciones de este las realizabamos todas juntando las partes)
