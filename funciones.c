@@ -356,7 +356,7 @@ void concretar_compra(char * nom_carr, Almacen * gl){
     Producto * prod;
     char cmpr_nom[MAX];
     Carrito * carr;
-    size_t temp = 1;
+    size_t temp = 0;
     size_t stock_ant;
 
     carr = BuscarCarro(nom_carr, gl);
@@ -377,14 +377,14 @@ void concretar_compra(char * nom_carr, Almacen * gl){
     while (prod != NULL){
         if (strcmp(cmpr_nom, prod->Nom_prod) == 0)
         {
+            temp++;
             Pop(carr->Productos);
             prod = Top(carr->Productos);
             if (prod == NULL) break;
-            stock_ant = prod->stock;
-            temp++;
             continue;
         }
 
+        printf("%ld\n", temp);
         if (temp > stock_ant)
         {
             printf("\nNo hay suficientes productos para concretar su compra!\n");
@@ -394,10 +394,11 @@ void concretar_compra(char * nom_carr, Almacen * gl){
         }
 
         actualizar_Stock(gl, cmpr_nom, temp);
-        printf("%ld\n", temp);
-        temp = 1;
+        
+        temp = 0;
         
         strcpy(cmpr_nom, prod->Nom_prod);
+        printf("nuevo producto %s\n", cmpr_nom);
         Pop(carr->Productos);
         prod = Top(carr->Productos);
     }
