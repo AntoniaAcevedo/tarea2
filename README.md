@@ -28,6 +28,8 @@ Este punto consiste en una lista de cualidades positivas y por mejorar de cada i
 [ ! ] = Por mejorar.
 
 
+
+
 -Antonia Acevedo
 []
 []
