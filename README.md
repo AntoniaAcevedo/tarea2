@@ -44,3 +44,5 @@ JM[+]Proactiva y con dedicación en la perfección del trabajo.
 []
 []
 JM[!]Por mejorar aspectos y detalles de ciertas funciones.
+
+(detalle respecto a los commits y contribuciones del trabajo que aparecen en github,lo sucedido es que no nos manejabamos en el grupo respecto a la actualizacion remota del repositorio y, las actualizaciones de este las realizabamos todas juntando las partes)
