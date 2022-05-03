@@ -10,7 +10,7 @@ Instrucciones de uso del Programa.
 	4.	Escribir el siguiente comando para compilar un .exe
 gcc *.c -o ejecutable.exe
 	5.	Escribir el siguiente comando para correr el .exe generado
-ejecutable.exe
+ejecutable.exe 
 
 
 Comentarios y recomendaciones acerca del programa y sus funciones.
@@ -18,7 +18,7 @@ Comentarios y recomendaciones acerca del programa y sus funciones.
 
 1)Antes de utilizar el resto de funciones del programa lo primero que debe hacer, es importar su archivo de productos. (1ºFuncion).
 
-
+2)El archivo a utilizar se llama "test.csv" el cual contiene los productos que seran trabajados.
 
 
 Co-evaluación grupal.
@@ -31,17 +31,17 @@ Este punto consiste en una lista de cualidades positivas y por mejorar de cada i
 
 
 -Antonia Acevedo
-[]
+AC[!]Mejorar la familiarizacion con github, para poder realizar mas commits propios.
 []
 JM[+]Buen desempeñó grupal y en las funciones Realizadas
 
 -Alexandra 
-[]
+AC[+]Muy bien trabajado, apoyando constantemente a los demas ademas de realizar su trabajo con un desempeño perfecto y efectivo.
 []
 JM[+]Proactiva y con dedicación en la perfección del trabajo.
 
 -Jorge Morgado
-[]
+AC[+] Trabajo de forma correcta, solo falto un poco mas de tiempo para poder finalizar su trabajo. 
 []
 JM[!]Por mejorar aspectos y detalles de ciertas funciones.
 

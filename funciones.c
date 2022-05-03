@@ -45,7 +45,7 @@ void Buscar_nom (char * n, Almacen * Global){
     else{
         printf("\n----Producto encontrado!----\n");
         printf("-----------------------------------------------------------------\n");
-        printf("-->%-48s Marca: %s|\n", prod -> Nom_prod, prod -> Marca);
+        printf("-->%-43s Marca: %9s |\n", prod -> Nom_prod, prod -> Marca);
         printf("Tipo: %-27s Stock:%4ld | Precio:%9ld |\n",prod -> Tipo, prod -> stock, prod -> precio);
         printf("                                                                |\n");
         printf("-----------------------------------------------------------------\n");
