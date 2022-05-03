@@ -20,6 +20,11 @@ Comentarios y recomendaciones acerca del programa y sus funciones.
 
 2)El archivo a utilizar se llama "test.csv" el cual contiene los productos que seran trabajados.
 
+3)El programa no es capaz de encontrar claves que contengan tildes.
+
+4)Durante los primeros commits (Al rededor del 70% del trabajo) se confundió el gitignore por un archivo de texto, resultando en
+la necesidad de eliminar manualmente archivos no deseados. Se solucionó al final.
+
 
 Co-evaluación grupal.
 
@@ -34,23 +39,23 @@ Este punto consiste en una lista de cualidades positivas y por mejorar de cada i
 
 AC[!]Mejorar la familiarizacion con github, para poder realizar mas commits propios.
 
-[]
+AM[+]Buen desempeño general
 
-JM[+]Buen desempeñó grupal y en las funciones Realizadas
+JM[+]Buen desempeño grupal y en las funciones Realizadas
 
 -Alexandra Mendoza
 
 AC[+]Muy bien trabajado, apoyando constantemente a los demas ademas de realizar su trabajo con un desempeño perfecto y efectivo.
 
-[]
+AM[+]Buen desempeño general
 
 JM[+]Proactiva y con dedicación en la perfección del trabajo.
 
 -Jorge Morgado
 
-AC[+] Trabajo de forma correcta, solo falto un poco mas de tiempo para poder finalizar su trabajo. 
+AC[+] Trabajo de forma correcta, solo falto un poco más de tiempo para poder finalizar su trabajo. 
 
-[]
+AM[!]Se recomienda realizar tareas asignadas con más tiempo de anticipación, por lo demás, buenas observaciones sobre el trabajo.
 
 JM[!]Por mejorar aspectos y detalles de ciertas funciones.
 
